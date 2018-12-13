@@ -7,6 +7,7 @@ defmodule BudgetingWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug BudgetingWeb.Auth
   end
 
   pipeline :api do
@@ -16,6 +17,8 @@ defmodule BudgetingWeb.Router do
   scope "/", BudgetingWeb do
     pipe_through :browser
 
+    resources "/users", UserController, only: [:new, :create, :show, :index]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/", PageController, :index
   end
 
